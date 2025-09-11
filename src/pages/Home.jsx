@@ -1,71 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { FaMoon, FaSun } from "react-icons/fa";
+import React, { useState } from "react";
 
 export default function Home() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [filter, setFilter] = useState("Todos");
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setDarkMode(true);
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (darkMode) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    }
-    setDarkMode(!darkMode);
-  };
-
   const timesFemininos = [
-    { name: "Corinthians", escudo: "", pontos: 30 },
-    { name: "Santos", escudo: "", pontos: 28 },
-    { name: "Flamengo", escudo: "", pontos: 25 },
-    { name: "Palmeiras", escudo: "", pontos: 27 },
-    { name: "São Paulo", escudo: "", pontos: 22 },
-    { name: "Grêmio", escudo: "", pontos: 20 },
+    { name: "Corinthians", pontos: 30 },
+    { name: "Santos", pontos: 28 },
+    { name: "Flamengo", pontos: 25 },
+    { name: "Palmeiras", pontos: 27 },
+    { name: "São Paulo", pontos: 22 },
+    { name: "Grêmio", pontos: 20 },
   ];
 
   const jogosAoVivo = [
-    { team1: "Corinthians", team2: "Santos", score: "2 : 1", escudo1: "", escudo2: "", posse: "55%", finalizacoes: "8-5" },
-    { team1: "Flamengo", team2: "Palmeiras", score: "0 : 0", escudo1: "", escudo2: "", posse: "48%", finalizacoes: "3-4" },
-    { team1: "São Paulo", team2: "Grêmio", score: "1 : 3", escudo1: "", escudo2: "", posse: "45%", finalizacoes: "5-9" },
+    { team1: "Corinthians", team2: "Santos", score: "2 : 1", posse: "55%", finalizacoes: "8-5" },
+    { team1: "Flamengo", team2: "Palmeiras", score: "0 : 0", posse: "48%", finalizacoes: "3-4" },
+    { team1: "São Paulo", team2: "Grêmio", score: "1 : 3", posse: "45%", finalizacoes: "5-9" },
   ];
 
   const ultimosJogos = [
-    { team1: "Corinthians", team2: "Palmeiras", time: "19:00", loc: "São Paulo", escudo1: "", escudo2: "", score: "3:2", posse: "60%", finalizacoes: "10-6" },
-    { team1: "Santos", team2: "Flamengo", time: "21:00", loc: "Rio de Janeiro", escudo1: "", escudo2: "", score: "1:1", posse: "52%", finalizacoes: "7-7" },
-    { team1: "Grêmio", team2: "São Paulo", time: "18:00", loc: "Porto Alegre", escudo1: "", escudo2: "", score: "0:2", posse: "40%", finalizacoes: "4-8" },
+    { team1: "Corinthians", team2: "Palmeiras", time: "19:00", loc: "São Paulo", score: "3:2", posse: "60%", finalizacoes: "10-6" },
+    { team1: "Santos", team2: "Flamengo", time: "21:00", loc: "Rio de Janeiro", score: "1:1", posse: "52%", finalizacoes: "7-7" },
+    { team1: "Grêmio", team2: "São Paulo", time: "18:00", loc: "Porto Alegre", score: "0:2", posse: "40%", finalizacoes: "4-8" },
   ];
 
   const proximosJogos = [
-    { team1: "Palmeiras", team2: "Santos", time: "20:00", loc: "São Paulo", escudo1: "", escudo2: "" },
-    { team1: "Corinthians", team2: "Flamengo", time: "21:00", loc: "Rio de Janeiro", escudo1: "", escudo2: "" },
+    { team1: "Palmeiras", team2: "Santos", time: "20:00", loc: "São Paulo" },
+    { team1: "Corinthians", team2: "Flamengo", time: "21:00", loc: "Rio de Janeiro" },
   ];
 
   const melhoresJogadoras = [
-    { name: "Alexia", gols: 20, img: "" },
-    { name: "Bia", gols: 18, img: "" },
-    { name: "Carla", gols: 15, img: "" },
-    { name: "Daniela", gols: 14, img: "" },
-    { name: "Elisa", gols: 12, img: "" },
+    { name: "Alexia", gols: 20 },
+    { name: "Bia", gols: 18 },
+    { name: "Carla", gols: 15 },
+    { name: "Daniela", gols: 14 },
+    { name: "Elisa", gols: 12 },
   ];
 
+  const [filter, setFilter] = useState("Todos");
   const filteredJogos = filter === "Todos" ? ultimosJogos : ultimosJogos.filter(j => j.team1 === filter || j.team2 === filter);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      {/* COLUNA ESQUERDA */}
+      {/* ESQUERDA */}
       <div className="space-y-6 lg:col-span-1">
-        {/* Jogos Ao Vivo */}
-        <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg transition-all duration-500">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg">
           <h3 className="font-bold text-lg mb-4 dark:text-white">Jogos Ao Vivo</h3>
           {jogosAoVivo.map((j, idx) => (
             <div key={idx} className="flex justify-between items-center py-2 border-b dark:border-gray-600 last:border-0">
@@ -76,7 +53,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Melhores Jogadoras */}
         <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg">
           <h3 className="font-bold text-lg mb-3 dark:text-white">Melhores Jogadoras</h3>
           {melhoresJogadoras.map((p, idx) => (
@@ -87,7 +63,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Filtro times */}
         <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg">
           <h3 className="font-bold text-lg mb-3 dark:text-white">Filtrar Times</h3>
           <select value={filter} onChange={(e) => setFilter(e.target.value)} className="w-full p-2 rounded-md border dark:border-gray-600 dark:bg-gray-700 dark:text-white">
@@ -97,9 +72,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* COLUNA CENTRAL */}
+      {/* CENTRO */}
       <div className="space-y-6 lg:col-span-2">
-        {/* Banner */}
         <div className="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between shadow-xl space-y-4 md:space-y-0">
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold">Desafio Semanal de Futebol Feminino</h2>
@@ -109,7 +83,6 @@ export default function Home() {
           <div className="w-48 h-48 bg-gray-300 rounded-xl"></div>
         </div>
 
-        {/* Últimos Jogos */}
         <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg">
           <h3 className="font-bold text-lg mb-4 dark:text-white">Últimos Jogos</h3>
           {filteredJogos.map((j, idx) => (
@@ -130,9 +103,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* COLUNA DIREITA */}
+      {/* DIREITA */}
       <div className="space-y-6 lg:col-span-1">
-        {/* Tendências Agora */}
         <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg">
           <h3 className="font-bold text-lg mb-3 dark:text-white">Tendências agora</h3>
           <div className="flex items-center space-x-3 mb-4">
@@ -143,7 +115,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Ranking de Times Femininos */}
           <div className="mb-4">
             <h4 className="font-semibold dark:text-white mb-2">Ranking de Times</h4>
             {timesFemininos.map((t, idx) => (
@@ -154,13 +125,9 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Próximos Jogos */}
           <div>
             <h4 className="font-semibold dark:text-white mb-2">Próximos Jogos</h4>
-            {[
-              { team1: "Palmeiras", team2: "Santos", time: "20:00", loc: "São Paulo" },
-              { team1: "Corinthians", team2: "Flamengo", time: "21:00", loc: "Rio de Janeiro" },
-            ].map((j, idx) => (
+            {proximosJogos.map((j, idx) => (
               <div key={idx} className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-2 rounded-lg mb-2">
                 <span className="dark:text-gray-200">{j.team1} vs {j.team2}</span>
                 <span className="dark:text-gray-300">{j.time} • {j.loc}</span>
