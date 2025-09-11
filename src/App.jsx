@@ -4,8 +4,12 @@ import Home from "./pages/Home";
 import Partidas from "./pages/Partidas";
 import Estatisticas from "./pages/Estatisticas";
 
+// Imagens (em src/assets)
+import ImgBrand from "./assets/benjamin-lehman-j8K0CVY12Zo-unsplash.jpg";      // topo ESQUERDO
+import ImgUser from "./assets/my-profit-tutor-rOYAYXHgEh4-unsplash.jpg";       // topo DIREITO
+
 export default function App() {
-  // tema simples (igual você já tinha antes)
+  // tema (igual você já tinha)
   const [darkMode, setDarkMode] = useState(false);
   useEffect(() => {
     const saved = localStorage.getItem("theme");
@@ -25,32 +29,66 @@ export default function App() {
     setDarkMode(!darkMode);
   };
 
-  // navegação sem router
+  // navegação (sem router)
   const [page, setPage] = useState("home"); // "home" | "partidas" | "estatisticas"
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-all duration-500">
       {/* NAV */}
       <nav className="bg-white dark:bg-gray-800 shadow-lg px-6 py-4 flex flex-col md:flex-row justify-between items-center transition-all duration-500 space-y-3 md:space-y-0">
+        {/* ESQUERDA: logo + título (com imagem) */}
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
+          <img
+            src={ImgBrand}
+            alt="PassaBola"
+            className="w-12 h-12 rounded-full object-cover ring-2 ring-white dark:ring-gray-700"
+          />
           <h1 className="text-2xl font-bold text-purple-700 dark:text-purple-400">PassaBola</h1>
         </div>
 
+        {/* LINKS */}
         <div className="flex items-center space-x-6 text-gray-700 dark:text-gray-200 font-semibold">
-          <button onClick={() => setPage("home")} className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="home"?"text-purple-700 dark:text-purple-300":""}`}>Home</button>
-          <button onClick={() => setPage("partidas")} className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="partidas"?"text-purple-700 dark:text-purple-300":""}`}>Partidas</button>
-          <button onClick={() => setPage("estatisticas")} className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="estatisticas"?"text-purple-700 dark:text-purple-300":""}`}>Estatísticas</button>
+          <button
+            onClick={() => setPage("home")}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="home"?"text-purple-700 dark:text-purple-300":""}`}
+          >
+            Home
+          </button>
+          <button
+            onClick={() => setPage("partidas")}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="partidas"?"text-purple-700 dark:text-purple-300":""}`}
+          >
+            Partidas
+          </button>
+          <button
+            onClick={() => setPage("estatisticas")}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="estatisticas"?"text-purple-700 dark:text-purple-300":""}`}
+          >
+            Estatísticas
+          </button>
           <span className="opacity-50">Inscrições</span>
         </div>
 
+        {/* DIREITA: busca + tema + usuário (com imagem) */}
         <div className="flex items-center space-x-4 w-full md:w-auto">
-          <input type="text" placeholder="Pesquisar..." className="px-3 py-2 border rounded-md hidden md:block w-full md:w-56 dark:bg-gray-700 dark:text-white dark:border-gray-600" />
-          <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+          <input
+            type="text"
+            placeholder="Pesquisar..."
+            className="px-3 py-2 border rounded-md hidden md:block w-full md:w-56 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+          />
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+            aria-label="Alternar tema"
+          >
             {darkMode ? <FaSun /> : <FaMoon />}
           </button>
           <span className="text-gray-600 dark:text-gray-200">Maria Silva</span>
-          <div className="w-10 h-10 bg-gray-400 rounded-full"></div>
+          <img
+            src={ImgUser}
+            alt="Avatar de Maria Silva"
+            className="w-10 h-10 rounded-full object-cover ring-2 ring-white dark:ring-gray-700"
+          />
         </div>
       </nav>
 
