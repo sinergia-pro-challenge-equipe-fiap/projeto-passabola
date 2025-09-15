@@ -5,8 +5,8 @@ import Partidas from "./pages/Partidas";
 import Estatisticas from "./pages/Estatisticas";
 
 // Imagens (em src/assets)
-import ImgBrand from "./assets/benjamin-lehman-j8K0CVY12Zo-unsplash.jpg";      // topo ESQUERDO
-import ImgUser from "./assets/my-profit-tutor-rOYAYXHgEh4-unsplash.jpg";       // topo DIREITO
+import ImgBrand from "./assets/logonav.jpg";      // topo ESQUERDO
+import ImgUser from "./assets/perfil-usuario.jpg";       // topo DIREITO
 
 export default function App() {
   // tema (igual você já tinha)

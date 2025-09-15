@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from "react";
 
 // IMAGENS (em src/assets)
-import ImgNav from "../assets/benjamin-lehman-j8K0CVY12Zo-unsplash.jpg";
-import ImgTrend from "../assets/my-profit-tutor-rOYAYXHgEh4-unsplash.jpg";
-import ImgBanner from "../assets/sporlab-wUbtxuZ5uiw-unsplash.jpg";
+import ImgNav from "../assets/logonav.jpg";
+import ImgTrend from "../assets/jogadora-tendencia.jpg";
+import ImgBanner from "../assets/copa-passabola.jpeg";
 
 export default function Home() {
   const [filter, setFilter] = useState("Todos");
@@ -109,7 +109,7 @@ export default function Home() {
           <div className="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between shadow-xl space-y-4 md:space-y-0">
             <div className="md:w-2/3">
               <h2 className="text-3xl font-bold">Desafio Semanal de Futebol Feminino</h2>
-              <p className="mt-2 text-lg">Participe e mostre suas habilidades! Local: London • 5:00 PM</p>
+              <p className="mt-2 text-lg">Participe e mostre suas habilidades! Local: São Paulo • 7:00 PM</p>
               <div className="mt-4 px-6 py-3 bg-white text-purple-600 rounded-xl hover:bg-gray-100 transition inline-block">Inscreva-se</div>
             </div>
 
@@ -158,8 +158,8 @@ export default function Home() {
                 className="w-12 h-12 rounded-full object-cover ring-2 ring-white dark:ring-gray-700"
               />
               <div>
-                <p className="font-semibold dark:text-gray-200">Julia</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">⚡ 300 Gols</p>
+                <p className="font-semibold dark:text-gray-200">Gi Fernandes</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">⚡ 23 Gols</p>
               </div>
             </div>
 
