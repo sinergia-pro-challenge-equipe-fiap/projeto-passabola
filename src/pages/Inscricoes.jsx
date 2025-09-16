@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from "react";
+import  { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import Footer from "../components/Footer"
 
 // IMAGENS (em src/assets)
 import ImgNav from "../assets/logonav.jpg";
@@ -166,10 +168,9 @@ export default function Inscricoes() {
               </button>
             </form>
           </div>
-        )}
-
-        
+        )} 
       </main>
+<Footer/>
     </div>
   );
 }

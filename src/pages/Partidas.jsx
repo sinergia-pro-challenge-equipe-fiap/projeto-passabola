@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from "react";
 import MatchCard from "../components/MatchCard";
+import  { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import Footer from "../components/Footer"
 
 const fmtDateISO = (d) => new Date(d).toISOString().split("T")[0];
 const isSameISO = (a, b) => fmtDateISO(a) === b;
@@ -176,6 +178,7 @@ export default function Partidas() {
           </button>
         </div>
       )}
+<Footer/>
     </div>
   );
 }

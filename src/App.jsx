@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Home from "./pages/Home";
 import Partidas from "./pages/Partidas";
 import Estatisticas from "./pages/Estatisticas";
@@ -106,24 +107,6 @@ export default function App() {
         {page === "estatisticas" && <Estatisticas />}
         {page === "inscricoes" && <Inscricoes />}
       </main>
-
-      {/* FOOTER */}
-      <footer className="bg-gray-100 dark:bg-gray-800 py-6 px-6 text-gray-600 dark:text-gray-300 transition-all">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="text-center md:text-left mb-4 md:mb-0">
-            <h3 className="font-bold text-purple-700 dark:text-purple-400">PassaBola</h3>
-            <p className="text-sm">Acompanhe seus jogos favoritos e fique por dentro do futebol feminino.</p>
-          </div>
-          <div className="flex space-x-4 text-xl">
-            <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
-            <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
-            <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
-          </div>
-        </div>
-        <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
-          © {new Date().getFullYear()} PassaBola. Todos os direitos reservados.
-        </div>
-      </footer>
-    </div>
-  );
-}
+         </div>
+       );
+     }

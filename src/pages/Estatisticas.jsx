@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { matches } from "../components/data/matches";
+import  { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import Footer from "../components/Footer"
 
 /** Helpers gerais **/
 const iso = (t) => new Date(t).toISOString().split("T")[0];
@@ -466,6 +468,7 @@ export default function Estatisticas() {
           ))}
         </div>
       </Card>
+<Footer/>
     </div>
   );
 }
