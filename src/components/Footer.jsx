@@ -18,6 +18,9 @@ const Footer = () => {
               <a href="#" className="hover:text-purple-600"><FaInstagram /></a>
               <a href="#" className="hover:text-purple-600"><FaTwitter /></a>
             </div>
+            <div className="text-center py-4 text-sm text-gray-600 dark:text-gray-400">
+        © 2025 - Todos os direitos reservados | PassaBola
+      </div>
           </footer>
     </div>
   )

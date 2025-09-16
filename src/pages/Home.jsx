@@ -309,28 +309,30 @@ export default function Home() {
           {/* Tendência Agora */}
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 text-center"
+            className=" bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 text-center"
           >
-            <h3 className="font-bold text-xl mb-3 text-purple-600 dark:text-purple-400">
+            <h3 className="font-bold text-xl mb-3 text-purple-600 dark:text-purple-400 ">
               🔥 Tendência Agora
             </h3>
-            <motion.div
-              key={trendIndex}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.8 }}
-              className="rounded-xl overflow-hidden shadow-lg"
-            >
-              <img
-                src={tendencias[trendIndex].img}
-                alt="Tendência"
-                className="w-full h-44 object-cover"
-              />
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-3 px-3 text-center">
-                {tendencias[trendIndex].desc}
-              </p>
-            </motion.div>
+                  <motion.div
+        key={trendIndex}
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -50 }}
+        transition={{ duration: 0.8 }}
+        className="rounded-xl overflow-hidden shadow-lg"
+      >
+        <div className="p-2">
+          <img
+            src={tendencias[trendIndex].img}
+            alt="Tendência"
+            className="w-full h-44 object-cover rounded-xl"
+          />
+          <p className="text-sm text-gray-600 dark:text-gray-300 mt-3 px-3 text-center">
+            {tendencias[trendIndex].desc}
+          </p>
+        </div>
+      </motion.div>
           </motion.div>
 
           {/* Ranking */}
@@ -360,9 +362,6 @@ export default function Home() {
 
       {/* FOOTER */}
       <Footer />
-      <div className="text-center py-4 text-sm text-gray-600 dark:text-gray-400">
-        © 2025 - Todos os direitos reservados | PassaBola
-      </div>
     </div>
   );
 }
