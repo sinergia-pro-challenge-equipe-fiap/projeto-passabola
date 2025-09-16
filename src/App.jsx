@@ -3,13 +3,14 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import Home from "./pages/Home";
 import Partidas from "./pages/Partidas";
 import Estatisticas from "./pages/Estatisticas";
+import Inscricoes from "./pages/Inscricoes";
 
 // Imagens (em src/assets)
 import ImgBrand from "./assets/logonav.jpg";      // topo ESQUERDO
-import ImgUser from "./assets/perfil-usuario.jpg";       // topo DIREITO
+import ImgUser from "./assets/perfil-usuario.jpg"; // topo DIREITO
 
 export default function App() {
-  // tema (igual você já tinha)
+  // Tema (igual você já tinha)
   const [darkMode, setDarkMode] = useState(false);
   useEffect(() => {
     const saved = localStorage.getItem("theme");
@@ -18,6 +19,7 @@ export default function App() {
       document.documentElement.classList.add("dark");
     }
   }, []);
+
   const toggleTheme = () => {
     if (darkMode) {
       document.documentElement.classList.remove("dark");
@@ -29,8 +31,8 @@ export default function App() {
     setDarkMode(!darkMode);
   };
 
-  // navegação (sem router)
-  const [page, setPage] = useState("home"); // "home" | "partidas" | "estatisticas"
+  // Navegação (sem router)
+  const [page, setPage] = useState("home"); // "home" | "partidas" | "estatisticas" | "inscricoes"
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900 transition-all duration-500">
@@ -50,23 +52,28 @@ export default function App() {
         <div className="flex items-center space-x-6 text-gray-700 dark:text-gray-200 font-semibold">
           <button
             onClick={() => setPage("home")}
-            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="home"?"text-purple-700 dark:text-purple-300":""}`}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page === "home" ? "text-purple-700 dark:text-purple-300" : ""}`}
           >
             Home
           </button>
           <button
             onClick={() => setPage("partidas")}
-            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="partidas"?"text-purple-700 dark:text-purple-300":""}`}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page === "partidas" ? "text-purple-700 dark:text-purple-300" : ""}`}
           >
             Partidas
           </button>
           <button
             onClick={() => setPage("estatisticas")}
-            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page==="estatisticas"?"text-purple-700 dark:text-purple-300":""}`}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page === "estatisticas" ? "text-purple-700 dark:text-purple-300" : ""}`}
           >
             Estatísticas
           </button>
-          <span className="opacity-50">Inscrições</span>
+          <button
+            onClick={() => setPage("inscricoes")}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${page === "inscricoes" ? "text-purple-700 dark:text-purple-300" : ""}`}
+          >
+            Inscrições
+          </button>
         </div>
 
         {/* DIREITA: busca + tema + usuário (com imagem) */}
@@ -94,7 +101,10 @@ export default function App() {
 
       {/* CONTEÚDO */}
       <main className="flex-1 p-6">
-        {page === "home" ? <Home /> : page === "partidas" ? <Partidas /> : <Estatisticas />}
+        {page === "home" && <Home />}
+        {page === "partidas" && <Partidas />}
+        {page === "estatisticas" && <Estatisticas />}
+        {page === "inscricoes" && <Inscricoes />}
       </main>
 
       {/* FOOTER */}
