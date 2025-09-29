@@ -21,6 +21,8 @@ import Gremio from "../assets/escudos/gremio.jpg";
 export default function Home() {
   const [filter, setFilter] = useState("Todos");
   const [trendIndex, setTrendIndex] = useState(0);
+  const [formData, setFormData] = useState({ nome: "", email: "" });
+  const [success, setSuccess] = useState(false);
 
   const tendencias = useMemo(
     () => [
@@ -103,6 +105,13 @@ export default function Home() {
       ? ultimosJogos
       : ultimosJogos.filter((j) => j.team1 === filter || j.team2 === filter);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Enviado:", formData);
+    setSuccess(true);
+    setFormData({ nome: "", email: "" });
+  };
+
   return (
     <div className="flex flex-col gap-8 bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen">
       {/* NAV MOBILE */}
@@ -147,21 +156,13 @@ export default function Home() {
                 className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
               >
                 <div className="flex items-center space-x-2">
-                  <img
-                    src={getEscudo(j.team1)}
-                    alt={j.team1}
-                    className="w-7 h-7 rounded-full"
-                  />
+                  <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
                   <span className="font-medium dark:text-gray-200">{j.team1}</span>
                 </div>
                 <span className="font-bold text-pink-600 dark:text-pink-400">{j.score}</span>
                 <div className="flex items-center space-x-2">
                   <span className="font-medium dark:text-gray-200">{j.team2}</span>
-                  <img
-                    src={getEscudo(j.team2)}
-                    alt={j.team2}
-                    className="w-7 h-7 rounded-full"
-                  />
+                  <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
                 </div>
               </motion.div>
             ))}
@@ -195,19 +196,46 @@ export default function Home() {
           transition={{ duration: 0.7 }}
           className="lg:col-span-2 space-y-8"
         >
-          {/* Card de inscrição chamativo */}
+          {/* Newsletter */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             className="bg-gradient-to-r from-purple-600 to-pink-500 rounded-3xl shadow-2xl p-8 text-center text-white"
           >
-            <h2 className="text-3xl font-extrabold mb-3">📋 Inscreva-se Agora!</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-3">📧 Assine nossa Newsletter</h2>
             <p className="mb-5 text-lg">
-              Participe do desafio semanal de futebol feminino da Copa PassaBola.
-              Mostre seu talento e entre para o ranking!
+              Receba as últimas novidades, estatísticas e tendências do futebol feminino.
             </p>
-            <button className="bg-white text-purple-600 font-bold px-8 py-3 rounded-xl shadow-lg hover:opacity-90 transition">
-              Fazer Inscrição
-            </button>
+            {success ? (
+              <p className="font-bold text-green-200">✅ Inscrição realizada com sucesso!</p>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col md:flex-row gap-3 justify-center"
+              >
+                <input
+                  type="text"
+                  placeholder="Seu nome"
+                  value={formData.nome}
+                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                  required
+                  className="px-4 py-2 rounded-xl text-gray-700 w-full md:w-1/3"
+                />
+                <input
+                  type="email"
+                  placeholder="Seu email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  required
+                  className="px-4 py-2 rounded-xl text-gray-700 w-full md:w-1/3"
+                />
+                <button
+                  type="submit"
+                  className="bg-white text-purple-600 font-bold px-6 py-2 rounded-xl shadow-lg hover:opacity-90 transition"
+                >
+                  Inscrever
+                </button>
+              </form>
+            )}
           </motion.div>
 
           {/* Próximos Jogos */}

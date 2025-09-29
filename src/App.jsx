@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Partidas from "./pages/Partidas";
 import Estatisticas from "./pages/Estatisticas";
 import Inscricoes from "./pages/Inscricoes";
+import QuemSomos from "./pages/QuemSomos";
 
 // Imagens
 import ImgBrand from "./assets/logonav.jpg";
@@ -91,6 +92,14 @@ export default function App() {
           >
             Inscrições
           </button>
+          <button
+            onClick={() => setPage("quemsomos")}
+            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${
+              page === "quemsomos" ? "text-purple-700 dark:text-purple-300" : ""
+            }`}
+          >
+            Quem somos?
+          </button>
         </div>
 
         {/* Direita: busca + tema + usuário */}
@@ -122,6 +131,7 @@ export default function App() {
         {page === "partidas" && <Partidas />}
         {page === "estatisticas" && <Estatisticas />}
         {page === "inscricoes" && <Inscricoes />}
+        {page === "quemsomos" && <QuemSomos />}
       </main>
     </div>
   );
