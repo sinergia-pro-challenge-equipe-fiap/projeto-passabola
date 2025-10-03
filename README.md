@@ -8,3 +8,5 @@ VITOR BORDALO CORREA GUIMARÃES RM:561592
 LINK GITHUB:https://github.com/sinergia-pro-challenge-equipe-fiap/projeto-passabola
 
 LINK VERCEL:https://projeto-passabola.vercel.app
+
+

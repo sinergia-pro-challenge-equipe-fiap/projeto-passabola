@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -14,9 +14,10 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex justify-center space-x-6 mt-4 text-gray-600 dark:text-gray-300 text-2xl">
-              <a href="#" className="hover:text-purple-600"><FaFacebook /></a>
-              <a href="#" className="hover:text-purple-600"><FaInstagram /></a>
-              <a href="#" className="hover:text-purple-600"><FaTwitter /></a>
+              <a href="https://www.whatsapp.com/channel/0029Vavm10347XeEyTTNi91i?fbclid=PAVERFWANMokxleHRuA2FlbQIxMQABp2eBokJXRM4B3jieREVMt63b0PbeyIQd1yQR3N_AiE1Z_PDldCnUFD2R5bm-_aem_bOGFwsQTpNFvZ7XLx280FA" className="hover:text-purple-600"><FaWhatsapp/></a>
+              <a href="https://www.instagram.com/passaabola/" className="hover:text-purple-600"><FaInstagram/></a>
+              <a href="https://www.tiktok.com/@passabola" className="hover:text-purple-600"><FaTiktok/></a>
+              <a href="https://www.youtube.com/@passabola" className="hover:text-purple-600"><FaYoutube/></a>
             </div>
             <div className="text-center py-4 text-sm text-gray-600 dark:text-gray-400">
         © 2025 - Todos os direitos reservados | PassaBola

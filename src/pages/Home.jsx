@@ -59,9 +59,9 @@ export default function Home() {
 
   const jogosAoVivo = useMemo(
     () => [
-      { team1: "Corinthians", team2: "Santos", score: "2 : 1" },
+      { team1: "Corinthians", team2: "Grêmio", score: "2 : 1" },
       { team1: "Flamengo", team2: "Palmeiras", score: "0 : 0" },
-      { team1: "São Paulo", team2: "Grêmio", score: "1 : 3" },
+      { team1: "São Paulo", team2: "Santos", score: "1 : 3" },
     ],
     []
   );
@@ -77,9 +77,9 @@ export default function Home() {
 
   const proximosJogos = useMemo(
     () => [
-      { team1: "Corinthians", team2: "Flamengo", date: "20/09 16:00" },
-      { team1: "Santos", team2: "Palmeiras", date: "21/09 18:00" },
-      { team1: "São Paulo", team2: "Grêmio", date: "22/09 20:00" },
+      { team1: "Corinthians", team2: "Flamengo", date: "20/10 16:00" },
+      { team1: "Santos", team2: "Palmeiras", date: "21/10 18:00" },
+      { team1: "São Paulo", team2: "Grêmio", date: "22/10 20:00" },
     ],
     []
   );
@@ -155,13 +155,20 @@ export default function Home() {
                 whileHover={{ scale: 1.03 }}
                 className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
               >
-                <div className="flex items-center space-x-2">
+                {/* Time 1 */}
+                <div className="flex items-center space-x-2 w-1/3">
                   <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
-                  <span className="font-medium dark:text-gray-200">{j.team1}</span>
+                  <span className="font-medium dark:text-gray-200 truncate">{j.team1}</span>
                 </div>
-                <span className="font-bold text-pink-600 dark:text-pink-400">{j.score}</span>
-                <div className="flex items-center space-x-2">
-                  <span className="font-medium dark:text-gray-200">{j.team2}</span>
+
+                {/* Placar centralizado */}
+                <div className="w-1/3 flex justify-center">
+                  <span className="font-bold text-pink-600 dark:text-pink-400 text-center">{j.score}</span>
+                </div>
+
+                {/* Time 2 */}
+                <div className="flex items-center space-x-2 w-1/3 justify-end">
+                  <span className="font-medium dark:text-gray-200 truncate">{j.team2}</span>
                   <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
                 </div>
               </motion.div>
@@ -174,7 +181,7 @@ export default function Home() {
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5"
           >
             <h3 className="font-bold text-xl mb-4 text-purple-600 dark:text-purple-400">
-              🌟 Melhores Jogadoras
+              🌟 Artilheiras
             </h3>
             {melhoresJogadoras.map((j, idx) => (
               <motion.div
@@ -199,7 +206,7 @@ export default function Home() {
           {/* Newsletter */}
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="bg-gradient-to-r from-purple-600 to-pink-500 rounded-3xl shadow-2xl p-8 text-center text-white"
+            className="bg-gradient-to-r from-purple-700 to-pink-700 rounded-3xl shadow-2xl p-8 text-center text-white"
           >
             <h2 className="text-3xl md:text-4xl font-extrabold mb-3">📧 Assine nossa Newsletter</h2>
             <p className="mb-5 text-lg">
@@ -218,7 +225,7 @@ export default function Home() {
                   value={formData.nome}
                   onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                   required
-                  className="px-4 py-2 rounded-xl text-gray-700 w-full md:w-1/3"
+                  className="px-4 py-2 rounded-xl text-white w-full md:w-1/3 border border-white placeholder-gray-300 bg-transparent"
                 />
                 <input
                   type="email"
@@ -226,7 +233,7 @@ export default function Home() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  className="px-4 py-2 rounded-xl text-gray-700 w-full md:w-1/3"
+                  className="px-4 py-2 rounded-xl text-white w-full md:w-1/3 border border-white placeholder-gray-300 bg-transparent"
                 />
                 <button
                   type="submit"
@@ -239,31 +246,38 @@ export default function Home() {
           </motion.div>
 
           {/* Próximos Jogos */}
-<motion.div
-  whileHover={{ scale: 1.02 }}
-  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5"
->
-  <h3 className="font-bold text-xl mb-4 text-purple-600 dark:text-purple-400">
-    ⏱ Próximos Jogos
-  </h3>
-  {proximosJogos.map((j, idx) => (
-    <motion.div
-      key={idx}
-      whileHover={{ scale: 1.03 }}
-      className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
-    >
-      <div className="flex items-center space-x-2">
-        <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
-        <span className="font-medium dark:text-gray-200">{j.team1}</span>
-      </div>
-      <span className="font-bold text-pink-600 dark:text-pink-400">{j.date}</span>
-      <div className="flex items-center space-x-2">
-        <span className="font-medium dark:text-gray-200">{j.team2}</span>
-        <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
-      </div>
-    </motion.div>
-  ))}
-</motion.div>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5"
+          >
+            <h3 className="font-bold text-xl mb-4 text-purple-600 dark:text-purple-400">
+              ⏱ Próximos Jogos
+            </h3>
+            {proximosJogos.map((j, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ scale: 1.03 }}
+                className="grid grid-cols-3 items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
+              >
+                {/* Time 1 */}
+                <div className="flex items-center space-x-2 justify-start">
+                  <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
+                  <span className="font-medium dark:text-gray-200">{j.team1}</span>
+                </div>
+
+                {/* Data/Horário */}
+                <div className="flex justify-center">
+                  <span className="font-bold text-pink-600 dark:text-pink-400">{j.date}</span>
+                </div>
+
+                {/* Time 2 */}
+                <div className="flex items-center space-x-2 justify-end">
+                  <span className="font-medium dark:text-gray-200">{j.team2}</span>
+                  <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
 
           {/* Últimos Jogos */}
           <motion.div
@@ -298,30 +312,32 @@ export default function Home() {
                 </button>
               ))}
             </div>
+
             {filteredJogos.map((j, idx) => (
               <motion.div
                 key={idx}
                 whileHover={{ scale: 1.03 }}
-                className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
+                className="flex items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
               >
-                <div className="flex items-center space-x-2">
-                  <img
-                    src={getEscudo(j.team1)}
-                    alt={j.team1}
-                    className="w-7 h-7 rounded-full"
-                  />
-                  <span className="font-medium dark:text-gray-200">{j.team1}</span>
+                {/* Time 1 */}
+                <div className="flex items-center space-x-2 w-1/3">
+                  <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
+                  <span className="font-medium dark:text-gray-200 truncate">{j.team1}</span>
                 </div>
-                <span className="font-bold text-pink-600 dark:text-pink-400">{j.score}</span>
-                <div className="flex items-center space-x-2">
-                  <span className="font-medium dark:text-gray-200">{j.team2}</span>
-                  <img
-                    src={getEscudo(j.team2)}
-                    alt={j.team2}
-                    className="w-7 h-7 rounded-full"
-                  />
+
+                {/* Placar + local */}
+                <div className="w-1/3 flex flex-col items-center">
+                  <span className="font-bold text-pink-600 dark:text-pink-400 text-center">
+                    {j.score}
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{j.loc}</span>
                 </div>
-                <span className="text-xs text-gray-500 dark:text-gray-400">{j.loc}</span>
+
+                {/* Time 2 */}
+                <div className="flex items-center space-x-2 w-1/3 justify-end">
+                  <span className="font-medium dark:text-gray-200 truncate">{j.team2}</span>
+                  <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -342,25 +358,25 @@ export default function Home() {
             <h3 className="font-bold text-xl mb-3 text-purple-600 dark:text-purple-400 ">
               🔥 Tendência Agora
             </h3>
-                  <motion.div
-        key={trendIndex}
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -50 }}
-        transition={{ duration: 0.8 }}
-        className="rounded-xl overflow-hidden shadow-lg"
-      >
-        <div className="p-2">
-          <img
-            src={tendencias[trendIndex].img}
-            alt="Tendência"
-            className="w-full h-44 object-cover rounded-xl"
-          />
-          <p className="text-sm text-gray-600 dark:text-gray-300 mt-3 px-3 text-center">
-            {tendencias[trendIndex].desc}
-          </p>
-        </div>
-      </motion.div>
+            <motion.div
+              key={trendIndex}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.8 }}
+              className="rounded-xl overflow-hidden shadow-lg"
+            >
+              <div className="p-2">
+                <img
+                  src={tendencias[trendIndex].img}
+                  alt="Tendência"
+                  className="w-full h-44 object-cover rounded-xl"
+                />
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-3 px-3 text-center">
+                  {tendencias[trendIndex].desc}
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Ranking */}
@@ -369,7 +385,7 @@ export default function Home() {
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5"
           >
             <h3 className="font-bold text-xl mb-4 text-purple-600 dark:text-purple-400">
-              🏆 Ranking de Times
+              🏆 Brasileirão Feminino
             </h3>
             {timesFemininos.map((t, idx) => (
               <motion.div

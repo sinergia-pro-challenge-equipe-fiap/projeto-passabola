@@ -122,7 +122,7 @@ export default function QuemSomos() {
               </p>
             </div>
             <a
-              href="https://chat.whatsapp.com/seu-link-aqui"
+              href="https://www.whatsapp.com/channel/0029Vavm10347XeEyTTNi91i?fbclid=PAVERFWANMokxleHRuA2FlbQIxMQABp2eBokJXRM4B3jieREVMt63b0PbeyIQd1yQR3N_AiE1Z_PDldCnUFD2R5bm-_aem_bOGFwsQTpNFvZ7XLx280FA"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-white text-green-600 px-6 py-3 rounded-xl font-bold shadow-md hover:opacity-90 transition flex items-center gap-2"

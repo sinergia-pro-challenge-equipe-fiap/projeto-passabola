@@ -3,7 +3,6 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import Home from "./pages/Home";
 import Partidas from "./pages/Partidas";
 import Estatisticas from "./pages/Estatisticas";
-import Inscricoes from "./pages/Inscricoes";
 import QuemSomos from "./pages/QuemSomos";
 
 // Imagens
@@ -13,6 +12,7 @@ import ImgUser from "./assets/perfil-usuario.jpg";
 export default function App() {
   // Tema
   const [darkMode, setDarkMode] = useState(false);
+
 
   // Inicializa o tema
   useEffect(() => {
@@ -83,14 +83,6 @@ export default function App() {
             }`}
           >
             Estatísticas
-          </button>
-          <button
-            onClick={() => setPage("inscricoes")}
-            className={`hover:text-purple-600 dark:hover:text-purple-400 transition ${
-              page === "inscricoes" ? "text-purple-700 dark:text-purple-300" : ""
-            }`}
-          >
-            Inscrições
           </button>
           <button
             onClick={() => setPage("quemsomos")}
