@@ -105,12 +105,32 @@ export default function Home() {
       ? ultimosJogos
       : ultimosJogos.filter((j) => j.team1 === filter || j.team2 === filter);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Enviado:", formData);
-    setSuccess(true);
-    setFormData({ nome: "", email: "" });
-  };
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+      
+        // validação simples
+        const okEmail = /\S+@\S+\.\S+/.test(formData.email);
+        if (!formData.nome || !okEmail) {
+          alert("Preencha um nome e e-mail válidos.");
+          return;
+        }
+      
+        try {
+          const r = await fetch("/api/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          });
+          const data = await r.json();
+          if (!r.ok || !data.ok) throw new Error(data.error || "Falha ao enviar.");
+      
+          setSuccess(true);
+          setFormData({ nome: "", email: "" });
+        } catch (err) {
+          console.error(err);
+          alert("Não foi possível concluir sua inscrição. Tente novamente.");
+        }
+      };
 
   return (
     <div className="flex flex-col gap-8 bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen">
