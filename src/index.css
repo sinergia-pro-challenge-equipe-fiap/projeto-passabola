@@ -1,4 +1,101 @@
 @import "tailwindcss";
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
+
+/* src/index.css
+   Overrides para forçar components "claros" a ficar escuros quando .dark estiver ativo
+   (coloque este arquivo em src/ e importe em App.jsx ou main.jsx)
+*/
+
+:root {
+  --dark-surface-1: #0b1220; /* card / main surface */
+  --dark-surface-2: #0f1724; /* lighter card */
+  --dark-border: rgba(255,255,255,0.06);
+  --dark-text: #e6eef8;
+  --dark-muted: #9aa6b2;
+  --dark-shadow: 0 10px 30px rgba(2,6,23,0.66);
+}
+
+/* Targets comuns gerados pelo Tailwind */
+.dark .bg-white {
+  background-color: var(--dark-surface-1) !important;
+  color: var(--dark-text) !important;
+}
+.dark .bg-gray-50 {
+  background-color: var(--dark-surface-2) !important;
+  color: var(--dark-text) !important;
+}
+.dark .bg-gray-100 {
+  background-color: var(--dark-surface-2) !important;
+  color: var(--dark-text) !important;
+}
+.dark .bg-white\/80 {
+  background-color: rgba(11,18,32,0.8) !important;
+  color: var(--dark-text) !important;
+}
+.dark .bg-white\/10 {
+  background-color: rgba(255,255,255,0.04) !important;
+}
+.dark .bg-white\/60 {
+  background-color: rgba(255,255,255,0.06) !important;
+}
+
+/* Borda / sombras */
+.dark .border-gray-200 {
+  border-color: var(--dark-border) !important;
+}
+.dark .shadow,
+.dark .shadow-lg,
+.dark .shadow-md,
+.dark .shadow-sm {
+  box-shadow: var(--dark-shadow) !important;
+}
+
+/* Textos que ficam muito escuros em modo dark */
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600 {
+  color: var(--dark-text) !important;
+}
+.dark .text-gray-500,
+.dark .text-gray-400 {
+  color: var(--dark-muted) !important;
+}
+
+/* Inputs / placeholders */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: transparent;
+  color: var(--dark-text);
+  border-color: var(--dark-border) !important;
+}
+.dark ::placeholder {
+  color: rgba(255,255,255,0.45) !important;
+}
+
+/* Força o fundo central e bordas da "sheet" principal */
+.dark .app-center-surface {
+  background: linear-gradient(180deg, rgba(11,18,32,1) 0%, rgba(8,12,18,1) 100%) !important;
+  border-color: var(--dark-border) !important;
+  box-shadow: var(--dark-shadow) !important;
+}
+
+/* Ajuste para cartas com gradiente: suaviza borda quando em dark */
+.dark .bg-gradient-to-r {
+  /* se tiver gradiente claro, deixamos como está — mas garantimos a borda */
+  border-color: var(--dark-border) !important;
+}
+
+/* Se quiser forçar imagens a não explodirem, deixe assim (opcional) */
+.dark img {
+  /* nada por ora, mas mantendo isso aqui se precisar ajustar */
+}
+
+/* Pequeno ajuste para dropdowns/menus */
+.dark .rounded-lg {
+  background-clip: padding-box;
+}
+
+
