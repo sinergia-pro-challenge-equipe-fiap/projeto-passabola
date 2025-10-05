@@ -1,3 +1,4 @@
+// src/pages/QuemSomos.jsx
 import { motion } from "framer-motion";
 import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import Footer from "../components/Footer";
@@ -7,12 +8,14 @@ import Luana from "../assets/luana.webp";
 
 export default function QuemSomos() {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    // Fundo: claro no light, ESCURO no dark (sem gradiente claro nas bordas)
+    <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-950">
       <main className="flex-grow px-6 lg:px-20 py-12">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          // Card principal continua escuro no dark
           className="max-w-5xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-10 space-y-8"
         >
           <h1 className="text-4xl font-extrabold text-purple-600 dark:text-purple-400 mb-6 text-center">
@@ -55,7 +58,7 @@ export default function QuemSomos() {
             className="grid md:grid-cols-2 gap-8 mt-6"
           >
             {/* Alê Xavier */}
-            <div className="bg-purple-50 dark:bg-gray-700 rounded-2xl shadow-md p-6 text-center">
+            <div className="rounded-2xl shadow-md p-6 text-center bg-white dark:bg-gray-800">
               <img
                 src={Ale}
                 alt="Alê Xavier"
@@ -64,7 +67,7 @@ export default function QuemSomos() {
               <h2 className="text-2xl font-bold text-purple-600 dark:text-purple-300 mb-3">
                 Alê Xavier
               </h2>
-              <p className="text-gray-700 dark:text-gray-300">
+              <p className="leading-relaxed text-gray-700 dark:text-gray-300">
                 Apresentadora, comentarista e influenciadora digital que ganhou destaque como a
                 primeira mulher a integrar o canal Desimpedidos, referência em conteúdo esportivo no
                 YouTube. Sua relação com o futebol começou ainda na infância, quando jogava e chegou
@@ -82,7 +85,7 @@ export default function QuemSomos() {
             </div>
 
             {/* Luana Maluf */}
-            <div className="bg-purple-50 dark:bg-gray-700 rounded-2xl shadow-md p-6 text-center">
+            <div className="rounded-2xl shadow-md p-6 text-center bg-white dark:bg-gray-800">
               <img
                 src={Luana}
                 alt="Luana Maluf"
@@ -91,7 +94,7 @@ export default function QuemSomos() {
               <h2 className="text-2xl font-bold text-purple-600 dark:text-purple-300 mb-3">
                 Luana Maluf
               </h2>
-              <p className="text-gray-700 dark:text-gray-300">
+              <p className="leading-relaxed text-gray-700 dark:text-gray-300">
                 Comentarista, apresentadora e criadora de conteúdo esportivo, formada em Relações
                 Públicas e apaixonada por futebol desde a adolescência, quando chegou a criar blogs e
                 espaços de opinião sobre o esporte. Torcedora do Palmeiras, iniciou sua trajetória na

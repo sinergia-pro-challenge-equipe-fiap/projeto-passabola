@@ -1,9 +1,7 @@
+// src/pages/Home.jsx
 import React, { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Footer from "../components/Footer";
-
-// Ícones
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 // Imagens
 import ImgNav from "../assets/logonav.jpg";
@@ -105,35 +103,31 @@ export default function Home() {
       ? ultimosJogos
       : ultimosJogos.filter((j) => j.team1 === filter || j.team2 === filter);
 
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-      
-        // validação simples
-        const okEmail = /\S+@\S+\.\S+/.test(formData.email);
-        if (!formData.nome || !okEmail) {
-          alert("Preencha um nome e e-mail válidos.");
-          return;
-        }
-      
-        try {
-          const r = await fetch("/api/subscribe", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-          });
-          const data = await r.json();
-          if (!r.ok || !data.ok) throw new Error(data.error || "Falha ao enviar.");
-      
-          setSuccess(true);
-          setFormData({ nome: "", email: "" });
-        } catch (err) {
-          console.error(err);
-          alert("Não foi possível concluir sua inscrição. Tente novamente.");
-        }
-      };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const okEmail = /\S+@\S+\.\S+/.test(formData.email);
+    if (!formData.nome || !okEmail) {
+      alert("Preencha um nome e e-mail válidos.");
+      return;
+    }
+    try {
+      const r = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await r.json();
+      if (!r.ok || !data.ok) throw new Error(data.error || "Falha ao enviar.");
+      setSuccess(true);
+      setFormData({ nome: "", email: "" });
+    } catch (err) {
+      console.error(err);
+      alert("Não foi possível concluir sua inscrição. Tente novamente.");
+    }
+  };
 
   return (
-    <div className="flex flex-col gap-8 bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen">
+    <div className="min-h-screen flex flex-col gap-8 bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       {/* NAV MOBILE */}
       <motion.div
         initial={{ y: -50, opacity: 0 }}
@@ -175,18 +169,15 @@ export default function Home() {
                 whileHover={{ scale: 1.03 }}
                 className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
               >
-                {/* Time 1 */}
                 <div className="flex items-center space-x-2 w-1/3">
                   <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
                   <span className="font-medium dark:text-gray-200 truncate">{j.team1}</span>
                 </div>
 
-                {/* Placar centralizado */}
                 <div className="w-1/3 flex justify-center">
                   <span className="font-bold text-pink-600 dark:text-pink-400 text-center">{j.score}</span>
                 </div>
 
-                {/* Time 2 */}
                 <div className="flex items-center space-x-2 w-1/3 justify-end">
                   <span className="font-medium dark:text-gray-200 truncate">{j.team2}</span>
                   <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
@@ -195,7 +186,7 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {/* Melhores Jogadoras */}
+          {/* Artilheiras */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5"
@@ -279,18 +270,15 @@ export default function Home() {
                 whileHover={{ scale: 1.03 }}
                 className="grid grid-cols-3 items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
               >
-                {/* Time 1 */}
                 <div className="flex items-center space-x-2 justify-start">
                   <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
                   <span className="font-medium dark:text-gray-200">{j.team1}</span>
                 </div>
 
-                {/* Data/Horário */}
                 <div className="flex justify-center">
                   <span className="font-bold text-pink-600 dark:text-pink-400">{j.date}</span>
                 </div>
 
-                {/* Time 2 */}
                 <div className="flex items-center space-x-2 justify-end">
                   <span className="font-medium dark:text-gray-200">{j.team2}</span>
                   <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
@@ -307,25 +295,28 @@ export default function Home() {
             <h3 className="font-bold text-xl mb-3 text-purple-600 dark:text-purple-400">
               📅 Últimos Jogos
             </h3>
+
+            {/* BOTÕES ATUALIZADOS */}
             <div className="flex flex-wrap gap-3 mb-4">
               <button
                 onClick={() => setFilter("Todos")}
-                className={`px-3 py-1 rounded-xl ${
+                className={`px-3 py-1 rounded-xl font-medium transition ${
                   filter === "Todos"
                     ? "bg-purple-600 text-white"
-                    : "bg-gray-200 dark:bg-gray-700 dark:text-gray-300"
+                    : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600"
                 }`}
               >
                 Todos
               </button>
+
               {timesFemininos.map((t, idx) => (
                 <button
                   key={idx}
                   onClick={() => setFilter(t.name)}
-                  className={`px-3 py-1 rounded-xl ${
+                  className={`px-3 py-1 rounded-xl font-medium transition ${
                     filter === t.name
                       ? "bg-purple-600 text-white"
-                      : "bg-gray-200 dark:bg-gray-700 dark:text-gray-300"
+                      : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600"
                   }`}
                 >
                   {t.name}
@@ -339,13 +330,11 @@ export default function Home() {
                 whileHover={{ scale: 1.03 }}
                 className="flex items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-xl mb-2"
               >
-                {/* Time 1 */}
                 <div className="flex items-center space-x-2 w-1/3">
                   <img src={getEscudo(j.team1)} alt={j.team1} className="w-7 h-7 rounded-full" />
                   <span className="font-medium dark:text-gray-200 truncate">{j.team1}</span>
                 </div>
 
-                {/* Placar + local */}
                 <div className="w-1/3 flex flex-col items-center">
                   <span className="font-bold text-pink-600 dark:text-pink-400 text-center">
                     {j.score}
@@ -353,7 +342,6 @@ export default function Home() {
                   <span className="text-xs text-gray-500 dark:text-gray-400">{j.loc}</span>
                 </div>
 
-                {/* Time 2 */}
                 <div className="flex items-center space-x-2 w-1/3 justify-end">
                   <span className="font-medium dark:text-gray-200 truncate">{j.team2}</span>
                   <img src={getEscudo(j.team2)} alt={j.team2} className="w-7 h-7 rounded-full" />
@@ -373,7 +361,7 @@ export default function Home() {
           {/* Tendência Agora */}
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className=" bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 text-center"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 text-center"
           >
             <h3 className="font-bold text-xl mb-3 text-purple-600 dark:text-purple-400 ">
               🔥 Tendência Agora
@@ -417,7 +405,9 @@ export default function Home() {
                   <img src={t.escudo} alt={t.name} className="w-7 h-7 rounded-full" />
                   <span className="font-medium dark:text-gray-200">{t.name}</span>
                 </div>
-                <span className="font-bold text-pink-600 dark:text-pink-400">{t.pontos} pts</span>
+                <span className="font-bold text-pink-600 dark:text-pink-400">
+                  {t.pontos} pts
+                </span>
               </motion.div>
             ))}
           </motion.div>
