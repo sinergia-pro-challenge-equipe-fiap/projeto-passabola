@@ -134,18 +134,7 @@ export default function QuemSomos() {
             </a>
           </motion.div>
 
-          {/* Redes sociais */}
-          <div className="flex justify-center gap-6 mt-8">
-            <a href="#" className="text-3xl text-blue-600 hover:opacity-80">
-              <FaFacebook />
-            </a>
-            <a href="#" className="text-3xl text-pink-600 hover:opacity-80">
-              <FaInstagram />
-            </a>
-            <a href="#" className="text-3xl text-sky-500 hover:opacity-80">
-              <FaTwitter />
-            </a>
-          </div>
+         
         </motion.div>
       </main>
 
