@@ -1,21 +1,16 @@
-import { defineConfig } from 'vite'
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-// ⚙️ Configuração do proxy CORS
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [react()],
   server: {
-    proxy: {
-      '/api': {
-        target: 'https://api.sportmonks.com/v3/football', // domínio da API
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''), // remove o prefixo /api
-      },
-    },
+    host: true,
+    port: 5173,
   },
-})
+  css: {
+    // garante que o Vite use seu postcss.config.js
+    postcss: './postcss.config.js',
+  },
+});
