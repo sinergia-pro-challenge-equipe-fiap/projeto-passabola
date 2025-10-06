@@ -1,294 +1,126 @@
-import React, { useMemo, useState, useEffect } from "react";
-import MatchCard from "../components/MatchCard";
-import Footer from "../components/Footer";
-import { getBrasileiraoFemininoMatches } from "../api";
-
-// Funções auxiliares para datas
-const fmtDateISO = (d) => new Date(d).toISOString().split("T")[0];
-const isSameISO = (a, b) => fmtDateISO(a) === b;
-const getTime = (d) => new Date(d).getTime();
-
-// Constantes de view (evita erro de digitação)
-const VIEW_CARDS = "cards";
-const VIEW_TABLE = "table";
+// src/pages/Partidas.jsx
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Partidas() {
-  const [partidas, setPartidas] = useState([]);
-  const [tab, setTab] = useState("live");
   const [q, setQ] = useState("");
-  const [league, setLeague] = useState("Todas");
-  const [date, setDate] = useState("");
-  const [sort, setSort] = useState("timeAsc");
-  const [view, setView] = useState(VIEW_CARDS); // cards ou tabela
-  const [onlyFav, setOnlyFav] = useState(false);
-  const [pageSize, setPageSize] = useState(6);
-  const [favTeams, setFavTeams] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("favTeams") || "[]");
-    } catch {
-      return [];
-    }
-  });
+  const [status, setStatus] = useState("todas"); // todas | ao-vivo | encerrado | agendado
 
-  // Toggle de favoritos
-  const toggleFav = (t) => {
-    setFavTeams((prev) => {
-      const s = new Set(prev);
-      s.has(t) ? s.delete(t) : s.add(t);
-      const arr = [...s];
-      localStorage.setItem("favTeams", JSON.stringify(arr));
-      return arr;
-    });
-  };
+  // Dados mock locais para evitar que a página quebre por causa de fetch
+  const partidas = useMemo(
+    () => [
+      { id: 1, casa: "Corinthians", fora: "Grêmio", placar: "2 : 1", status: "encerrado", data: "10/10 16:00" },
+      { id: 2, casa: "Flamengo", fora: "Palmeiras", placar: "0 : 0", status: "ao-vivo", data: "10/10 18:00" },
+      { id: 3, casa: "São Paulo", fora: "Santos", placar: "- : -", status: "agendado", data: "12/10 20:00" },
+      { id: 4, casa: "Palmeiras", fora: "Grêmio", placar: "1 : 3", status: "encerrado", data: "08/10 19:00" },
+    ],
+    []
+  );
 
-  // Fetch das partidas
-  useEffect(() => {
-    const fetchMatches = async () => {
-      try {
-        const matches = await getBrasileiraoFemininoMatches();
-        setPartidas(matches);
-      } catch (error) {
-        console.error("Erro ao carregar as partidas:", error);
-      }
-    };
-    fetchMatches();
-  }, []);
-
-  // Filtro + ordenação
-  const filtered = useMemo(() => {
-    let arr = partidas
-      .filter((p) => p.status === tab)
-      .filter((p) => (league === "Todas" ? true : p.league === league))
-      .filter((p) => {
-        if (!q) return true;
-        const t = q.toLowerCase();
-        return (
-          p.team1.toLowerCase().includes(t) ||
-          p.team2.toLowerCase().includes(t) ||
-          p.city?.toLowerCase().includes(t)
-        );
-      })
-      .filter((p) => (date ? isSameISO(p.datetime, date) : true))
-      .filter((p) =>
-        onlyFav ? favTeams.includes(p.team1) || favTeams.includes(p.team2) : true
+  const filtradas = useMemo(() => {
+    const texto = q.trim().toLowerCase();
+    return partidas
+      .filter(p => (status === "todas" ? true : p.status === status))
+      .filter(p =>
+        texto
+          ? p.casa.toLowerCase().includes(texto) ||
+            p.fora.toLowerCase().includes(texto)
+          : true
       );
-
-    // Ordenação
-    arr.sort((a, b) => {
-      if (sort === "timeAsc") return getTime(a.datetime) - getTime(b.datetime);
-      if (sort === "timeDesc") return getTime(b.datetime) - getTime(a.datetime);
-      if (sort === "league") return a.league.localeCompare(b.league);
-      if (sort === "alpha")
-        return (a.team1 + a.team2).localeCompare(b.team1 + b.team2);
-      return 0;
-    });
-
-    return arr;
-  }, [partidas, tab, league, q, date, onlyFav, favTeams, sort]);
-
-  const visible = filtered.slice(0, pageSize);
-  const hasMore = filtered.length > visible.length;
+  }, [partidas, q, status]);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
-      {/* Título + tabs */}
-      <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-            Partidas
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Acompanhe ao vivo, confira as próximas e veja os confrontos
-            encerrados.
-          </p>
-        </div>
-        <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl w-full lg:w-auto">
-          {[
-            { key: "live", label: "Ao vivo" },
-            { key: "upcoming", label: "Próximas" },
-            { key: "finished", label: "Encerradas" },
-          ].map((t) => (
-            <button
-              key={t.key}
-              type="button"
-              onClick={() => {
-                setTab(t.key);
-                setPageSize(6);
-              }}
-              className={`flex-1 lg:flex-none px-4 py-2 rounded-lg text-sm font-semibold transition
-                ${
-                  tab === t.key
-                    ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 px-6 lg:px-12 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="max-w-6xl mx-auto space-y-6"
+      >
+        <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-extrabold text-purple-600 dark:text-purple-400">
+              Partidas
+            </h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Pesquise por time e filtre por status.
+            </p>
+          </div>
 
-      {/* Filtros + toggle de visualização */}
-      <div className="grid grid-cols-1 md:grid-cols-6 gap-3">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Buscar por time ou cidade..."
-          className="px-3 py-2 rounded-xl border dark:border-gray-700 dark:bg-gray-800 dark:text-white md:col-span-2"
-        />
-        <select
-          value={league}
-          onChange={(e) => setLeague(e.target.value)}
-          className="px-3 py-2 rounded-xl border dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-        >
-          <option>Todas</option>
-          {["Brasileirão Fem.", "Copa do Brasil Fem.", "Amistoso"].map((l) => (
-            <option key={l}>{l}</option>
-          ))}
-        </select>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="px-3 py-2 rounded-xl border dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-        />
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="px-3 py-2 rounded-xl border dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-        >
-          <option value="timeAsc">Horário ↑</option>
-          <option value="timeDesc">Horário ↓</option>
-          <option value="league">Liga</option>
-          <option value="alpha">A–Z</option>
-        </select>
-        <div className="flex items-center gap-2 justify-between">
-          <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+          <div className="flex flex-col sm:flex-row gap-3">
             <input
-              type="checkbox"
-              checked={onlyFav}
-              onChange={(e) => setOnlyFav(e.target.checked)}
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Buscar por time..."
+              className="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white/90 dark:bg-gray-800/80 placeholder-gray-500 outline-none focus:ring-2 focus:ring-purple-500"
             />
-            Só favoritos
-          </label>
-        </div>
-
-        {/* Toggle de Cards / Lista */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setView(VIEW_CARDS)}
-            className={`px-3 py-1 rounded-lg text-sm font-semibold ${
-              view === VIEW_CARDS
-                ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-            }`}
-          >
-            Cards
-          </button>
-          <button
-            type="button"
-            onClick={() => setView(VIEW_TABLE)}
-            className={`px-3 py-1 rounded-lg text-sm font-semibold ${
-              view === VIEW_TABLE
-                ? "bg-gradient-to-r from-purple-600 to-pink-500 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-            }`}
-          >
-            Lista
-          </button>
-        </div>
-      </div>
-
-      {/* Exibição de partidas */}
-      {filtered.length === 0 ? (
-        <div className="text-center text-gray-600 dark:text-gray-400 py-16 bg-white dark:bg-gray-800 rounded-2xl">
-          Nenhuma partida encontrada para os filtros selecionados.
-        </div>
-      ) : view === VIEW_CARDS ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {visible.map((m) => (
-            <MatchCard
-              key={m.id}
-              m={m}
-              toggleFav={toggleFav}
-              favTeams={favTeams}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200">
-              <tr>
-                <th className="text-left p-3">Status</th>
-                <th className="text-left p-3">Partida</th>
-                <th className="text-left p-3">Liga/Rodada</th>
-                <th className="text-left p-3">Cidade</th>
-                <th className="text-left p-3">Data</th>
-                <th className="text-left p-3">Hora</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visible.map((m) => (
-                <tr key={m.id} className="border-t dark:border-gray-700">
-                  <td className="p-3">
-                    <span
-                      className={`px-2 py-0.5 rounded text-xs ${
-                        m.status === "live"
-                          ? "bg-red-500/10 text-red-400 animate-pulse"
-                          : m.status === "upcoming"
-                          ? "bg-yellow-500/10 text-yellow-400"
-                          : "bg-emerald-500/10 text-emerald-400"
-                      }`}
-                    >
-                      {m.status === "live"
-                        ? "AO VIVO"
-                        : m.status === "upcoming"
-                        ? "EM BREVE"
-                        : "ENCERRADO"}
-                    </span>
-                  </td>
-                  <td className="p-3 font-medium text-gray-800 dark:text-gray-100">
-                    {m.team1} <span className="text-purple-500">vs</span>{" "}
-                    {m.team2}
-                  </td>
-                  <td className="p-3 text-gray-600 dark:text-gray-300">
-                    {m.league} • {m.round}
-                  </td>
-                  <td className="p-3 text-gray-600 dark:text-gray-300">
-                    {m.city}
-                  </td>
-                  <td className="p-3 text-gray-600 dark:text-gray-300">
-                    {new Date(m.datetime).toLocaleDateString()}
-                  </td>
-                  <td className="p-3 text-gray-600 dark:text-gray-300">
-                    {new Date(m.datetime).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </td>
-                </tr>
+            <div className="flex gap-2">
+              {[
+                { key: "todas", label: "Todas" },
+                { key: "ao-vivo", label: "Ao vivo" },
+                { key: "encerrado", label: "Encerradas" },
+                { key: "agendado", label: "Agendadas" },
+              ].map((f) => (
+                <button
+                  key={f.key}
+                  onClick={() => setStatus(f.key)}
+                  className={`px-3 py-2 rounded-xl text-sm font-medium transition ${
+                    status === f.key
+                      ? "bg-purple-600 text-white"
+                      : "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+                  }`}
+                >
+                  {f.label}
+                </button>
               ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+            </div>
+          </div>
+        </header>
 
-      {/* Carregar mais */}
-      {hasMore && (
-        <div className="flex justify-center">
-          <button
-            type="button"
-            onClick={() => setPageSize((s) => s + 6)}
-            className="px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold hover:opacity-90"
-          >
-            Carregar mais
-          </button>
-        </div>
-      )}
+        <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg divide-y divide-gray-200 dark:divide-gray-700">
+          {filtradas.length === 0 && (
+            <div className="p-6 text-center text-gray-600 dark:text-gray-400">
+              Nenhuma partida encontrada.
+            </div>
+          )}
 
-      <Footer />
+          {filtradas.map((p) => (
+            <div
+              key={p.id}
+              className="p-4 flex items-center gap-3 sm:gap-6"
+            >
+              <span
+                className={`text-xs px-2 py-1 rounded-lg font-semibold uppercase tracking-wide ${
+                  p.status === "ao-vivo"
+                    ? "bg-pink-100 text-pink-700 dark:bg-pink-900/40 dark:text-pink-300"
+                    : p.status === "encerrado"
+                    ? "bg-gray-100 text-gray-700 dark:bg-gray-900/40 dark:text-gray-300"
+                    : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
+                }`}
+              >
+                {p.status}
+              </span>
+
+              <div className="flex-1 grid grid-cols-3 items-center">
+                <div className="text-right pr-2 font-medium truncate">
+                  {p.casa}
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-extrabold text-pink-600 dark:text-pink-400">
+                    {p.placar}
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {p.data}
+                  </div>
+                </div>
+                <div className="text-left pl-2 font-medium truncate">
+                  {p.fora}
+                </div>
+              </div>
+            </div>
+          ))}
+        </section>
+      </motion.div>
     </div>
   );
 }
