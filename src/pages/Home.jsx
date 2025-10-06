@@ -296,28 +296,32 @@ export default function Home() {
               📅 Últimos Jogos
             </h3>
 
-            {/* BOTÕES ATUALIZADOS */}
+            {/* BOTÕES (fix contraste no dark com `!`) */}
             <div className="flex flex-wrap gap-3 mb-4">
               <button
                 onClick={() => setFilter("Todos")}
-                className={`px-3 py-1 rounded-xl font-medium transition ${
-                  filter === "Todos"
-                    ? "bg-purple-600 text-white"
-                    : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600"
-                }`}
+                aria-pressed={filter === "Todos"}
+                className={`px-4 py-2 rounded-xl font-semibold transition-colors
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500
+                  ${filter === "Todos"
+                    ? "bg-purple-600 text-white shadow"
+                    : "!bg-gray-200 !text-gray-800 hover:bg-gray-300 dark:!bg-gray-700 dark:!text-gray-100 dark:hover:!bg-gray-600 !border dark:!border-gray-600"
+                  }`}
               >
                 Todos
               </button>
 
-              {timesFemininos.map((t, idx) => (
+              {timesFemininos.map((t) => (
                 <button
-                  key={idx}
+                  key={t.name}
                   onClick={() => setFilter(t.name)}
-                  className={`px-3 py-1 rounded-xl font-medium transition ${
-                    filter === t.name
-                      ? "bg-purple-600 text-white"
-                      : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600"
-                  }`}
+                  aria-pressed={filter === t.name}
+                  className={`px-4 py-2 rounded-xl font-semibold transition-colors
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500
+                    ${filter === t.name
+                      ? "bg-purple-600 text-white shadow"
+                      : "!bg-gray-200 !text-gray-800 hover:bg-gray-300 dark:!bg-gray-700 dark:!text-gray-100 dark:hover:!bg-gray-600 !border dark:!border-gray-600"
+                    }`}
                 >
                   {t.name}
                 </button>
